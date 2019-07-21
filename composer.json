@@ -1,0 +1,17 @@
+{
+    "name": "s3huber/tinkeround",
+    "description": "Enhancing Laravel Tinker for tinkering a( )round.",
+    "type": "library",
+    "keywords": ["laravel", "tinker", "devtools"],
+    "homepage": "https://github.com/s3huber/tinkeround",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sebastian Huber",
+            "homepage": "https://hejfish.com"
+        }
+    ],
+    "config": {
+        "sort-packages": true
+    }
+}
