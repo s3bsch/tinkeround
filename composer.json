@@ -11,6 +11,9 @@
             "homepage": "https://hejfish.com"
         }
     ],
+    "autoload": {
+        "psr-4": { "Tinkeround\\": "src/" }
+    },
     "config": {
         "sort-packages": true
     }
