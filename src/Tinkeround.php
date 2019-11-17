@@ -6,7 +6,7 @@ namespace Tinkeround;
  * Provide useful stuff for tinkering a( )round.
  *
  * Extend your tinker script from this.
- * See {@link TBD} as an example.
+ * See {@link \TinkeroundExample} as an example.
  */
 abstract class Tinkeround
 {
