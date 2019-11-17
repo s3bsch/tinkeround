@@ -11,6 +11,9 @@
             "homepage": "https://hejfish.com"
         }
     ],
+    "require-dev": {
+        "laravel/tinker": "^1.0"
+    },
     "autoload": {
         "psr-4": { "Tinkeround\\": "src/" }
     },
