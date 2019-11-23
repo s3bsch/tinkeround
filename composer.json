@@ -12,10 +12,14 @@
         }
     ],
     "require-dev": {
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "phpunit/phpunit": "^8"
     },
     "autoload": {
         "psr-4": { "Tinkeround\\": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "Tinkeround\\Tests\\": "tests/" }
     },
     "config": {
         "sort-packages": true
