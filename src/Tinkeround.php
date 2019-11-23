@@ -27,6 +27,22 @@ abstract class Tinkeround
     }
 
     /**
+     * Dump variable(s) without tinkering with it.
+     * An alias to the global dump helper method.
+     *
+     * @param mixed $var
+     * @param mixed ...$moreVars
+     */
+    public function dump($var, ...$moreVars): void
+    {
+        dump($var);
+
+        foreach ($moreVars as $var) {
+            dump($var);
+        }
+    }
+
+    /**
      * Wraps {@link tinker()} method, where the actual tinkering belongs to.
      */
     protected function tinkerWrapper(): void
