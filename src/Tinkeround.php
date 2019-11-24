@@ -8,7 +8,9 @@ use Tinkeround\Traits\LogMethods;
  * Provide useful stuff for tinkering a( )round.
  *
  * Extend your tinker script from this.
+ *
  * See {@link \TinkeroundExample} as an example.
+ * See {@link \TinkeroundDemo} for an extensive demo.
  */
 abstract class Tinkeround
 {
