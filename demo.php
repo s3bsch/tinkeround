@@ -7,6 +7,8 @@ use Tinkeround\Tinkeround;
  */
 class TinkeroundDemo extends Tinkeround
 {
+    protected const WELCOME_MESSAGE = "C'mon, let's tinker a( )round with the demo script!";
+
     protected function tinker(): void
     {
         $this->log('hello tinkeround demo!');

@@ -16,8 +16,11 @@ abstract class Tinkeround
 {
     use LogMethods;
 
+    /** @var string Message which is logged at the beginning of a tinkeround session */
+    protected const WELCOME_MESSAGE = "C'mon, let's tinker a( )round!";
+
     /**
-     * C'mon, let's tinker!
+     * C'mon, let's tinker a( )round!
      *
      * Calls {@link tinker()} method, where the actual tinkering belongs to.
      */
@@ -49,11 +52,11 @@ abstract class Tinkeround
     }
 
     /**
-     * Wraps {@link tinker()} method, where the actual tinkering belongs to.
+     * Log welcome message at the beginning of a tinkeround session.
      */
-    protected function tinkerWrapper(): void
+    protected function logWelcomeMessage(): void
     {
-        $this->tinker();
+        $this->log(static::WELCOME_MESSAGE);
     }
 
     /**
@@ -62,4 +65,14 @@ abstract class Tinkeround
      * This is called by {@link tinkerWrapper()}.
      */
     abstract protected function tinker(): void;
+
+    /**
+     * Wraps {@link tinker()} method, where the actual tinkering belongs to.
+     */
+    protected function tinkerWrapper(): void
+    {
+        $this->logWelcomeMessage();
+
+        $this->tinker();
+    }
 }
