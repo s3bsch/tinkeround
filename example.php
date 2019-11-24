@@ -9,7 +9,7 @@ class TinkeroundExample extends Tinkeround
 {
     protected function tinker(): void
     {
-        dump('hello tinkeround!');
+        $this->log('hello tinkeround!');
     }
 }
 

@@ -2,6 +2,8 @@
 
 namespace Tinkeround;
 
+use Tinkeround\Traits\LogMethods;
+
 /**
  * Provide useful stuff for tinkering a( )round.
  *
@@ -10,6 +12,8 @@ namespace Tinkeround;
  */
 abstract class Tinkeround
 {
+    use LogMethods;
+
     /**
      * C'mon, let's tinker!
      *

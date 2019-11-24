@@ -11,6 +11,9 @@
             "homepage": "https://hejfish.com"
         }
     ],
+    "require": {
+        "ext-json": "*"
+    },
     "require-dev": {
         "laravel/tinker": "^1.0",
         "phpunit/phpunit": "^8"
