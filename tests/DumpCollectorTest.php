@@ -2,8 +2,6 @@
 
 namespace Tinkeround\Tests;
 
-use Exception;
-
 /**
  * Test for the test helper.
  */
@@ -102,25 +100,17 @@ class DumpCollectorTest extends TestCase
 
     function test_if_shifting_of_empty_dumps_throws_an_exception()
     {
-        try {
-            $collector = new DumpCollector();
-            $collector->shiftDump();
+        $collector = new DumpCollector();
 
-            $this->fail('Expected exception was not thrown.');
-        } catch (Exception $ex) {
-            $this->assertEquals('No dumps available.', $ex->getMessage());
-        }
+        $this->expectExceptionMessage('No dumps available.');
+        $collector->shiftDump();
     }
 
     function test_if_popping_of_empty_dumps_throws_an_exception()
     {
-        try {
-            $collector = new DumpCollector();
-            $collector->popDump();
+        $collector = new DumpCollector();
 
-            $this->fail('Expected exception was not thrown.');
-        } catch (Exception $ex) {
-            $this->assertEquals('No dumps available.', $ex->getMessage());
-        }
+        $this->expectExceptionMessage('No dumps available.');
+        $collector->popDump();
     }
 }
