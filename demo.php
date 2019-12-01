@@ -7,6 +7,8 @@ use Tinkeround\Tinkeround;
  */
 class TinkeroundDemo extends Tinkeround
 {
+    protected const EXIT_MESSAGE = "Demo script done – hope it was illuminating!";
+
     protected const WELCOME_MESSAGE = "C'mon, let's tinker a( )round with the demo script!";
 
     protected function tinker(): void

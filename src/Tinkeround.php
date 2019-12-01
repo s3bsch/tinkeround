@@ -16,8 +16,8 @@ abstract class Tinkeround
 {
     use LogMethods;
 
-    /** @var string Default message which is logged before exiting tinkeround session */
-    protected const FINAL_MESSAGE = "Tinkeround over – see ya next time!";
+    /** @var string Default message which is logged when exiting tinkeround session */
+    protected const EXIT_MESSAGE = "Tinkeround done – hope it was fun!";
 
     /** @var string Message which is logged at the beginning of a tinkeround session */
     protected const WELCOME_MESSAGE = "C'mon, let's tinker a( )round!";
@@ -64,11 +64,11 @@ abstract class Tinkeround
     /**
      * Print message and exit tinker shell.
      *
-     * @param string $message (optional) Overrides {@link Tinkeround::FINAL_MESSAGE}
+     * @param string $message (optional) Overrides {@link Tinkeround::EXIT_MESSAGE}
      */
     protected function exit(string $message = null): void
     {
-        $message = $message ?? self::FINAL_MESSAGE;
+        $message = $message ?? static::EXIT_MESSAGE;
 
         $this->log($message);
         exit();
