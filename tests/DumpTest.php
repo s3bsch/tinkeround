@@ -14,7 +14,7 @@ class DumpTest extends TestCase
 
     function setUp(): void
     {
-        $this->testy = $this->getMockForAbstractClass(Tinkeround::class, [], '', false);
+        $this->testy = $this->getTestableTinkeroundInstance();
     }
 
     function test_dumping_of_null_value()
