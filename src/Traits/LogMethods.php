@@ -3,7 +3,7 @@
 namespace Tinkeround\Traits;
 
 /**
- * Trait including various log methods.
+ * Trait including log methods.
  */
 trait LogMethods
 {

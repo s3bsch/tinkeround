@@ -2,6 +2,7 @@
 
 namespace Tinkeround;
 
+use Tinkeround\Traits\DatabaseMethods;
 use Tinkeround\Traits\LogMethods;
 use Tinkeround\Traits\TimeMethods;
 
@@ -15,6 +16,7 @@ use Tinkeround\Traits\TimeMethods;
  */
 abstract class Tinkeround
 {
+    use DatabaseMethods;
     use LogMethods;
     use TimeMethods;
 
@@ -49,6 +51,7 @@ abstract class Tinkeround
     private function __construct()
     {
         $this->tinkeroundStart = microtime(true);
+        $this->registerQueryListener();
     }
 
     /**
@@ -75,10 +78,13 @@ abstract class Tinkeround
     protected function exit(string $message = null): void
     {
         $message = $message ?? static::EXIT_MESSAGE;
-        ['gross' => $gross, 'net' => $net] = $this->getTinkerTimes();
 
+        ['gross' => $gross, 'net' => $net] = $this->getTinkerTimes();
         $runtimeInfo = "took {$net}/{$gross}ms";
-        $this->log($message, '→', $runtimeInfo);
+
+        $queryCountInfo = "and made {$this->queryCountTotal} queries";
+
+        $this->log($message, '→', $runtimeInfo, $queryCountInfo);
         exit();
     }
 

@@ -3,7 +3,7 @@
 namespace Tinkeround\Traits;
 
 /**
- * Trait including various methods related to time.
+ * Trait including methods related to time.
  */
 trait TimeMethods
 {
