@@ -22,7 +22,7 @@ class TinkerTimesTest extends TestCase
     {
         $times = $this->testy->getTinkerTimes();
 
-        $this->assertIsArray($times);
+        $this->assertInternalType('array', $times);
         $this->assertArrayHasKey('gross', $times);
         $this->assertArrayHasKey('net', $times);
     }
@@ -31,8 +31,8 @@ class TinkerTimesTest extends TestCase
     {
         $times = $this->testy->getTinkerTimes();
 
-        $this->assertIsInt($times['gross']);
-        $this->assertIsInt($times['net']);
+        $this->assertInternalType('int', $times['gross']);
+        $this->assertInternalType('int', $times['net']);
     }
 
     function test_LARAVEL_START_is_defined_as_zero_for_tests()
@@ -41,6 +41,9 @@ class TinkerTimesTest extends TestCase
         $this->assertEquals(0, constant('LARAVEL_START'), 'Constant `LARAVEL_START` is expected to be `0`.');
     }
 
+    /**
+     * @depends test_LARAVEL_START_is_defined_as_zero_for_tests
+     */
     function test_gross_time_is_valid()
     {
         $now = microtime(true);

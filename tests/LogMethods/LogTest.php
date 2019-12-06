@@ -148,7 +148,7 @@ class LogTest extends TestCase
         $this->assertEquals(1, $collector->dumpCount());
 
         $dump = $collector->shiftDump();
-        $this->assertIsArray($dump);
+        $this->assertInternalType('array', $dump);
         $this->assertEmpty($dump);
     }
 
@@ -172,11 +172,10 @@ class LogTest extends TestCase
 
         $this->testy->log($this->testy);
 
-        /** @noinspection PhpFullyQualifiedNameUsageInspection */
         $this->testy->log('standard class:', new \stdClass());
 
         $this->assertEquals(2, $collector->dumpCount());
-        $this->assertStringContainsString("Tinkeround", $collector->shiftDump());
+        $this->assertContains("Tinkeround", $collector->shiftDump());
         $this->assertEquals("standard class: `stdClass`", $collector->shiftDump());
     }
 }
