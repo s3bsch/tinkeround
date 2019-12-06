@@ -12,10 +12,14 @@ use Tinkeround\Tinkeround;
 class TestCase extends PHPUnitTestCase
 {
     /**
+     * Create testable Tinkeround mock.
+     *
+     * @param string $className (optional) Tinkeround class name which should be mocked
      * @return MockObject|Tinkeround
      */
-    protected function getTestableTinkeroundInstance()
+    protected function createTinkeroundMock(string $className = null)
     {
-        return $this->getMockForAbstractClass(Tinkeround::class, [], '', false);
+        $className = $className ?? Tinkeround::class;
+        return $this->getMockForAbstractClass($className, [], '', false);
     }
 }

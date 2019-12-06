@@ -16,7 +16,7 @@ class LogTest extends TestCase
 
     function setUp(): void
     {
-        $this->testy = $this->getTestableTinkeroundInstance();
+        $this->testy = $this->createTinkeroundMock();
     }
 
     function test_it_logs_empty_string()
