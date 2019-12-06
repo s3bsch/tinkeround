@@ -3,6 +3,7 @@
 namespace Tinkeround;
 
 use Tinkeround\Traits\LogMethods;
+use Tinkeround\Traits\TimeMethods;
 
 /**
  * Provide useful stuff for tinkering a( )round.
@@ -15,6 +16,7 @@ use Tinkeround\Traits\LogMethods;
 abstract class Tinkeround
 {
     use LogMethods;
+    use TimeMethods;
 
     /** @var string Default message which is logged when exiting tinkeround session */
     protected const EXIT_MESSAGE = "Tinkeround done – hope it was fun!";
@@ -29,6 +31,9 @@ abstract class Tinkeround
      */
     protected $exitSession = true;
 
+    /** @var int Unix timestamp in milliseconds at tinkeround start */
+    protected $tinkeroundStart;
+
     /**
      * C'mon, let's tinker a( )round!
      *
@@ -36,13 +41,14 @@ abstract class Tinkeround
      */
     public static function letsTinker(): void
     {
-        $tinker = new static();
-        $tinker->tinkerWrapper();
+        $tinkeround = new static();
+        $tinkeround->tinkerWrapper();
     }
 
     // Prevent construction of instance outside of `letsTinker()`.
     private function __construct()
     {
+        $this->tinkeroundStart = microtime(true);
     }
 
     /**
@@ -69,8 +75,10 @@ abstract class Tinkeround
     protected function exit(string $message = null): void
     {
         $message = $message ?? static::EXIT_MESSAGE;
+        ['gross' => $gross, 'net' => $net] = $this->getTinkerTimes();
 
-        $this->log($message);
+        $runtimeInfo = "took {$net}/{$gross}ms";
+        $this->log($message, '→', $runtimeInfo);
         exit();
     }
 
