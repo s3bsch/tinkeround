@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\DB;
  */
 trait DatabaseMethods
 {
+    /** @var bool If true, bindings are logged additionally to executed database query */
+    protected $logBindings = false;
+
     /** @var bool If true, executed database queries are logged */
     protected $logQueries = false;
 
@@ -35,10 +38,13 @@ trait DatabaseMethods
 
     /**
      * Enable logging of executed database queries.
+     *
+     * @param bool $logBindings (optional) True to enable logging of bindings in addition to query
      */
-    public function enableQueryLogging(): void
+    public function enableQueryLogging($logBindings = false): void
     {
         $this->logQueries = true;
+        $this->logBindings = $logBindings;
     }
 
     /**
@@ -51,6 +57,10 @@ trait DatabaseMethods
     {
         if ($this->logQueries) {
             $this->log($query->sql);
+
+            if ($this->logBindings) {
+                $this->log('bindings:', $query->bindings);
+            }
         }
     }
 

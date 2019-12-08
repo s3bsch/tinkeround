@@ -59,6 +59,19 @@ class LogQueryTest extends TestCase
         $this->assertEquals('fake sql 1', $collector->shiftDump());
     }
 
+    function test_it_logs_bindings_in_case_logging_of_bindings_is_enabled()
+    {
+        $collector = new DumpCollector();
+        $this->testy->enableQueryLogging(true);
+
+        $query = $this->createFakeQuery('fake sql');
+        $this->testy->logQuery($query);
+
+        $this->assertEquals(2, $collector->dumpCount());
+        $this->assertEquals('fake sql', $collector->shiftDump());
+        $this->assertEquals('bindings: `[]`', $collector->shiftDump());
+    }
+
     /** @noinspection PhpUndefinedFieldInspection */
     private function createFakeQuery(string $sql, array $bindings = [])
     {
