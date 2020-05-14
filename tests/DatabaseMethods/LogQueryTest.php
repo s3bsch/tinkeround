@@ -12,57 +12,52 @@ use Tinkeround\Tinkeround;
  */
 class LogQueryTest extends TestCase
 {
+    private $dumpCollector;
+
     /** @var TinkeroundLogQuery */
     private $testy;
 
     function setUp(): void
     {
+        $this->dumpCollector = new DumpCollector();
         $this->testy = $this->createTinkeroundMock(TinkeroundLogQuery::class);
     }
 
     function test_it_does_not_log_query_by_default()
     {
-        $collector = new DumpCollector();
-
         $this->dispatchFakeQueryEvent();
-        $this->assertEquals(0, $collector->dumpCount());
+        $this->assertEquals(0, $this->dumpCollector->dumpCount());
     }
 
     function test_it_logs_query_in_case_logging_is_enabled()
     {
-        $collector = new DumpCollector();
-
         $this->testy->enableQueryLogging();
         $this->dispatchFakeQueryEvent();
 
-        $this->assertEquals(1, $collector->dumpCount());
-        $this->assertEquals('fake sql', $collector->shiftDump());
+        $this->assertEquals(1, $this->dumpCollector->dumpCount());
+        $this->assertEquals('fake sql', $this->dumpCollector->shiftDump());
     }
 
     function test_it_does_not_log_queries_after_disabling_logging()
     {
-        $collector = new DumpCollector();
-
         $this->testy->enableQueryLogging();
         $this->dispatchFakeQueryEvent('fake sql 1');
 
         $this->testy->disableQueryLogging();
         $this->dispatchFakeQueryEvent('fake sql 2');
 
-        $this->assertEquals(1, $collector->dumpCount());
-        $this->assertEquals('fake sql 1', $collector->shiftDump());
+        $this->assertEquals(1, $this->dumpCollector->dumpCount());
+        $this->assertEquals('fake sql 1', $this->dumpCollector->shiftDump());
     }
 
     function test_it_logs_bindings_in_case_logging_of_bindings_is_enabled()
     {
-        $collector = new DumpCollector();
         $this->testy->enableQueryLogging(true);
-
         $this->dispatchFakeQueryEvent();
 
-        $this->assertEquals(2, $collector->dumpCount());
-        $this->assertEquals('fake sql', $collector->shiftDump());
-        $this->assertEquals('bindings: `[]`', $collector->shiftDump());
+        $this->assertEquals(2, $this->dumpCollector->dumpCount());
+        $this->assertEquals('fake sql', $this->dumpCollector->shiftDump());
+        $this->assertEquals('bindings: `[]`', $this->dumpCollector->shiftDump());
     }
 
     /** @noinspection PhpUndefinedFieldInspection */
