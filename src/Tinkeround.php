@@ -71,6 +71,16 @@ abstract class Tinkeround
     }
 
     /**
+     * Prevent tinker shell from exiting after tinkeround session so further commands can be executed.
+     *
+     * @param bool $preventExit (optional) False to revoke a previous call and exit indeed
+     */
+    public function preventExit(bool $preventExit = true): void
+    {
+        $this->exitSession = !$preventExit;
+    }
+
+    /**
      * Print message and exit tinker shell.
      *
      * @param string $message (optional) Overrides {@link Tinkeround::EXIT_MESSAGE}
