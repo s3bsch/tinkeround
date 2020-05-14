@@ -48,23 +48,6 @@ trait DatabaseMethods
     }
 
     /**
-     * Log executed database query in case query logging is enabled.
-     * Additionally log bindings in case logging of bindings is enabled.
-     *
-     * @param QueryExecuted $query Executed database query
-     */
-    public function logQuery(QueryExecuted $query): void
-    {
-        if ($this->logQueries) {
-            $this->log($query->sql);
-
-            if ($this->logBindings) {
-                $this->log('bindings:', $query->bindings);
-            }
-        }
-    }
-
-    /**
      * @return int Total count of queries made during tinkeround session
      */
     public function totalQueryCount(): int
@@ -80,15 +63,32 @@ trait DatabaseMethods
         return $this->queryTimeTotal;
     }
 
-    protected function handleQueryExecutedEvent(QueryExecuted $query): void
+    protected function handleQueryExecutedEvent(QueryExecuted $event): void
     {
         $this->queryCount++;
         $this->queryCountTotal++;
 
-        $this->queryTime += $query->time;
-        $this->queryTimeTotal += $query->time;
+        $this->queryTime += $event->time;
+        $this->queryTimeTotal += $event->time;
 
-        $this->logQuery($query);
+        $this->logQuery($event);
+    }
+
+    /**
+     * Log executed database query in case query logging is enabled.
+     * Additionally log bindings in case logging of bindings is enabled.
+     *
+     * @param QueryExecuted $event Executed database query event
+     */
+    protected function logQuery(QueryExecuted $event): void
+    {
+        if ($this->logQueries) {
+            $this->log($event->sql);
+
+            if ($this->logBindings) {
+                $this->log('bindings:', $event->bindings);
+            }
+        }
     }
 
     protected function registerQueryListener(): void

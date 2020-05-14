@@ -12,31 +12,28 @@ use Tinkeround\Tinkeround;
  */
 class LogQueryTest extends TestCase
 {
-    /** @var Tinkeround */
+    /** @var TinkeroundLogQuery */
     private $testy;
 
     function setUp(): void
     {
-        $this->testy = $this->createTinkeroundMock();
+        $this->testy = $this->createTinkeroundMock(TinkeroundLogQuery::class);
     }
 
     function test_it_does_not_log_query_by_default()
     {
         $collector = new DumpCollector();
 
-        $query = $this->createFakeQuery('fake sql');
-        $this->testy->logQuery($query);
-
+        $this->dispatchFakeQueryEvent();
         $this->assertEquals(0, $collector->dumpCount());
     }
 
     function test_it_logs_query_in_case_logging_is_enabled()
     {
         $collector = new DumpCollector();
-        $this->testy->enableQueryLogging();
 
-        $query = $this->createFakeQuery('fake sql');
-        $this->testy->logQuery($query);
+        $this->testy->enableQueryLogging();
+        $this->dispatchFakeQueryEvent();
 
         $this->assertEquals(1, $collector->dumpCount());
         $this->assertEquals('fake sql', $collector->shiftDump());
@@ -45,15 +42,12 @@ class LogQueryTest extends TestCase
     function test_it_does_not_log_queries_after_disabling_logging()
     {
         $collector = new DumpCollector();
-        $this->testy->enableQueryLogging();
 
-        $query = $this->createFakeQuery('fake sql 1');
-        $this->testy->logQuery($query);
+        $this->testy->enableQueryLogging();
+        $this->dispatchFakeQueryEvent('fake sql 1');
 
         $this->testy->disableQueryLogging();
-
-        $query = $this->createFakeQuery('fake sql 2');
-        $this->testy->logQuery($query);
+        $this->dispatchFakeQueryEvent('fake sql 2');
 
         $this->assertEquals(1, $collector->dumpCount());
         $this->assertEquals('fake sql 1', $collector->shiftDump());
@@ -64,8 +58,7 @@ class LogQueryTest extends TestCase
         $collector = new DumpCollector();
         $this->testy->enableQueryLogging(true);
 
-        $query = $this->createFakeQuery('fake sql');
-        $this->testy->logQuery($query);
+        $this->dispatchFakeQueryEvent();
 
         $this->assertEquals(2, $collector->dumpCount());
         $this->assertEquals('fake sql', $collector->shiftDump());
@@ -73,7 +66,7 @@ class LogQueryTest extends TestCase
     }
 
     /** @noinspection PhpUndefinedFieldInspection */
-    private function createFakeQuery(string $sql, array $bindings = [])
+    private function createFakeQueryEvent(string $sql, array $bindings = [])
     {
         $fakeQuery = $this->createMock(QueryExecuted::class);
         $fakeQuery->sql = $sql;
@@ -81,5 +74,19 @@ class LogQueryTest extends TestCase
 
         /** @var QueryExecuted $fakeQuery */
         return $fakeQuery;
+    }
+
+    private function dispatchFakeQueryEvent(string $sql = 'fake sql'): void
+    {
+        $event = $this->createFakeQueryEvent($sql);
+        $this->testy->handleFakeQueryExecutedEvent($event);
+    }
+}
+
+abstract class TinkeroundLogQuery extends Tinkeround
+{
+    public function handleFakeQueryExecutedEvent(QueryExecuted $event): void
+    {
+        $this->handleQueryExecutedEvent($event);
     }
 }
