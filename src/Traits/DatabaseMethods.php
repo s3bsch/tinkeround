@@ -48,7 +48,18 @@ trait DatabaseMethods
     }
 
     /**
-     * Log database query count since last reset.
+     * Log database query count and time since last reset and reset both of them.
+     *
+     * @param string $comment (optional) Comment regarding context of query count
+     */
+    public function logAndResetQueryCount(string $comment = null): void
+    {
+        $this->logQueryCount($comment);
+        $this->resetQueryCount();
+    }
+
+    /**
+     * Log database query count and time since last reset.
      *
      * @param string $comment (optional) Comment regarding context of query count
      */
@@ -59,6 +70,15 @@ trait DatabaseMethods
 
         $msg = sprintf($format, $this->queryCount, $this->queryTime, $comment);
         $this->log($msg);
+    }
+
+    /**
+     * Reset database query count and time.
+     */
+    public function resetQueryCount(): void
+    {
+        $this->queryCount = 0;
+        $this->queryTime = 0.0;
     }
 
     /**
