@@ -48,6 +48,20 @@ trait DatabaseMethods
     }
 
     /**
+     * Log database query count since last reset.
+     *
+     * @param string $comment (optional) Comment regarding context of query count
+     */
+    public function logQueryCount(string $comment = null): void
+    {
+        $format = 'query count: %d → %dms';
+        $format = ($comment ? $format . '  (%s)' : $format);
+
+        $msg = sprintf($format, $this->queryCount, $this->queryTime, $comment);
+        $this->log($msg);
+    }
+
+    /**
      * @return int Total count of queries made during tinkeround session
      */
     public function totalQueryCount(): int
