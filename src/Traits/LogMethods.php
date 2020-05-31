@@ -40,6 +40,33 @@ trait LogMethods
         }
     }
 
+    /**
+     * Log type of given variable. Class name in case object is given, otherwise the data type.
+     *
+     * @param mixed $var Variable for which the type is logged
+     */
+    public function logType($var): void
+    {
+        $type = gettype($var);
+        $type = strtolower($type);
+
+        if (is_string($var) || is_object($var)) {
+            $value = $var;
+
+            if (is_object($var)) {
+                $value = get_class($var);
+            }
+
+            $this->log('Type:', "`{$type}`", "({$value})");
+        } else {
+            if (is_float($var)) {
+                $type = 'float';
+            }
+
+            $this->log('Type:', "`{$type}`");
+        }
+    }
+
     private function logSingleArgument($arg): void
     {
         if (is_string($arg)) {
