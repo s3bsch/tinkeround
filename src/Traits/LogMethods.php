@@ -2,6 +2,8 @@
 
 namespace Tinkeround\Traits;
 
+use Countable;
+
 /**
  * Trait including log methods.
  */
@@ -38,6 +40,20 @@ trait LogMethods
             $args = func_get_args();
             $this->logMultipleArguments($args);
         }
+    }
+
+    /**
+     * Log number of items contained in given list.
+     *
+     * @param array|Countable $list List of items which are counted
+     * @param string $name (optional) Name for count (context), defaults to 'count'
+     */
+    public function logCount($list, string $name = null): void
+    {
+        $name = $name ?? 'Count';
+        $count = count($list);
+
+        $this->log("{$name}: {$count}");
     }
 
     /**
