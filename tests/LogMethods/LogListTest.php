@@ -67,6 +67,14 @@ class LogListTest extends TestCase
         $this->assertCount(3, $this->dumpCollector->shiftDump());
     }
 
+    function test_it_logs_a_limited_number_of_items()
+    {
+        $this->testy->logList([1, 2, 3], 2);
+
+        $this->assertEquals(1, $this->dumpCollector->dumpCount());
+        $this->assertEquals([1, 2], $this->dumpCollector->shiftDump());
+    }
+
     private function makeModels(int $count): Collection
     {
         $models = collect();

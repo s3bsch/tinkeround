@@ -62,14 +62,19 @@ trait LogMethods
      * Log representation of given list.
      *
      * @param array|Arrayable $list
+     * @param int $limit (optional) Limit number of list items which are logged
      * @throws RuntimeException In case invalid argument for list parameter is given
      */
-    public function logList($list): void
+    public function logList($list, int $limit = null): void
     {
         $this->checkListParameter($list);
 
         if ($list instanceof Arrayable) {
             $list = $list->toArray();
+        }
+
+        if ($limit > 0) {
+            $list = array_splice($list, 0, $limit);
         }
 
         $this->dump($list);
