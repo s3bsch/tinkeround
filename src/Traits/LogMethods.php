@@ -3,6 +3,8 @@
 namespace Tinkeround\Traits;
 
 use Countable;
+use Illuminate\Contracts\Support\Arrayable;
+use RuntimeException;
 
 /**
  * Trait including log methods.
@@ -57,6 +59,23 @@ trait LogMethods
     }
 
     /**
+     * Log representation of given list.
+     *
+     * @param array|Arrayable $list
+     * @throws RuntimeException In case invalid argument for list parameter is given
+     */
+    public function logList($list): void
+    {
+        $this->checkListParameter($list);
+
+        if ($list instanceof Arrayable) {
+            $list = $list->toArray();
+        }
+
+        $this->dump($list);
+    }
+
+    /**
      * Log type of given variable. Class name in case object is given, otherwise the data type.
      *
      * @param mixed $var Variable for which the type is logged
@@ -81,6 +100,15 @@ trait LogMethods
 
             $this->log('Type:', "`{$type}`");
         }
+    }
+
+    private function checkListParameter($list): void
+    {
+        if (is_array($list) || $list instanceof Arrayable) {
+            return;
+        }
+
+        throw new RuntimeException('Given argument for list parameter is invalid.');
     }
 
     private function logSingleArgument($arg): void
