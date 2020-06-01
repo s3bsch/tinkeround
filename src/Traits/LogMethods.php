@@ -4,6 +4,7 @@ namespace Tinkeround\Traits;
 
 use Countable;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Database\Eloquent\Model;
 use RuntimeException;
 
 /**
@@ -41,6 +42,22 @@ trait LogMethods
         } else {
             $args = func_get_args();
             $this->logMultipleArguments($args);
+        }
+    }
+
+    /**
+     * Log attributes of given model.
+     *
+     * @param Model|null $model
+     * @param string[] $only (optional) List of attribute keys to log, the rest is filtered out
+     */
+    public function logAttributes(?Model $model, array $only = null): void
+    {
+        if (!$model) {
+            $this->log(null);
+        } else {
+            $attributes = $this->filterAttributes($model, $only ?? []);
+            $this->dump($attributes);
         }
     }
 
@@ -114,6 +131,24 @@ trait LogMethods
         }
 
         throw new RuntimeException('Given argument for list parameter is invalid.');
+    }
+
+    private function filterAttributes(Model $model, array $only): array
+    {
+        $filtered = [];
+        $all = $model->getAttributes();
+
+        if (!$only) {
+            return $all;
+        }
+
+        foreach ($only as $key) {
+            if (array_key_exists($key, $all)) {
+                $filtered[$key] = $all[$key];
+            }
+        }
+
+        return $filtered;
     }
 
     private function logSingleArgument($arg): void
