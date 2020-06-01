@@ -2,26 +2,13 @@
 
 namespace Tinkeround\Tests\LogMethods;
 
-use Tinkeround\Tests\DumpCollector;
 use Tinkeround\Tests\TestCase;
-use Tinkeround\Tinkeround;
 
 /**
  * Test for the `logType()` method.
  */
 class LogTypeTest extends TestCase
 {
-    private $dumpCollector;
-
-    /** @var Tinkeround */
-    private $testy;
-
-    function setUp(): void
-    {
-        $this->dumpCollector = new DumpCollector();
-        $this->testy = $this->createTinkeroundMock();
-    }
-
     function test_it_detects_null_value()
     {
         $this->testy->logType(null);

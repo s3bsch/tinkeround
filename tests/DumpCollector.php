@@ -12,11 +12,22 @@ class DumpCollector
 {
     private $dumps;
 
-    public function __construct()
+    /**
+     * @return DumpCollector New instance registered as var dump handler
+     */
+    public static function newInstance(): self
     {
-        VarDumper::setHandler(function ($var) {
-            $this->pushDump($var);
+        $instance = new static();
+
+        VarDumper::setHandler(function ($var) use ($instance) {
+            $instance->pushDump($var);
         });
+
+        return $instance;
+    }
+
+    private function __construct()
+    {
     }
 
     /**

@@ -10,12 +10,11 @@ use Tinkeround\Tinkeround;
 class PreventExitTest extends TestCase
 {
     /** @var TinkeroundPreventExit */
-    private $testy;
+    protected $testy;
 
     function setUp(): void
     {
-        new DumpCollector();
-
+        parent::setUp();
         $this->testy = $this->createTinkeroundMock(TinkeroundPreventExit::class);
     }
 

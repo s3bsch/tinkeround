@@ -3,7 +3,6 @@
 namespace Tinkeround\Tests\DatabaseMethods;
 
 use Illuminate\Database\Events\QueryExecuted;
-use Tinkeround\Tests\DumpCollector;
 use Tinkeround\Tests\TestCase;
 use Tinkeround\Tinkeround;
 
@@ -12,14 +11,12 @@ use Tinkeround\Tinkeround;
  */
 class LogQueryTest extends TestCase
 {
-    private $dumpCollector;
-
     /** @var TinkeroundLogQuery */
-    private $testy;
+    protected $testy;
 
     function setUp(): void
     {
-        $this->dumpCollector = new DumpCollector();
+        parent::setUp();
         $this->testy = $this->createTinkeroundMock(TinkeroundLogQuery::class);
     }
 

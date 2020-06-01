@@ -10,6 +10,26 @@ use Tinkeround\Tinkeround;
  */
 class TestCase extends OrchestraTestCase
 {
+    /** @var DumpCollector */
+    protected $dumpCollector;
+
+    /** @var bool Prevent creation of {@link DumpCollector} on test setup */
+    protected $preventDumpCollector = false;
+
+    /** @var Tinkeround */
+    protected $testy;
+
+    function setUp(): void
+    {
+        parent::setUp();
+
+        $this->testy = $this->createTinkeroundMock();
+
+        if (!$this->preventDumpCollector) {
+            $this->dumpCollector = DumpCollector::newInstance();
+        }
+    }
+
     /**
      * Create testable Tinkeround mock.
      *

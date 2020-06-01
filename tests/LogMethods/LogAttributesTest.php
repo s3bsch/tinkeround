@@ -2,27 +2,14 @@
 
 namespace Tinkeround\Tests\LogMethods;
 
-use Tinkeround\Tests\DumpCollector;
 use Tinkeround\Tests\TestCase;
 use Tinkeround\Tests\TestModel;
-use Tinkeround\Tinkeround;
 
 /**
  * Test for the `logAttributes()` method.
  */
 class LogAttributesTest extends TestCase
 {
-    private $dumpCollector;
-
-    /** @var Tinkeround */
-    private $testy;
-
-    function setUp(): void
-    {
-        $this->dumpCollector = new DumpCollector();
-        $this->testy = $this->createTinkeroundMock();
-    }
-
     function test_it_logs_null_value()
     {
         $this->testy->logAttributes(null);

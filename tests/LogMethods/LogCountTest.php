@@ -2,26 +2,13 @@
 
 namespace Tinkeround\Tests\LogMethods;
 
-use Tinkeround\Tests\DumpCollector;
 use Tinkeround\Tests\TestCase;
-use Tinkeround\Tinkeround;
 
 /**
  * Test for the `logCount()` method.
  */
 class LogCountTest extends TestCase
 {
-    private $dumpCollector;
-
-    /** @var Tinkeround */
-    private $testy;
-
-    function setUp(): void
-    {
-        $this->dumpCollector = new DumpCollector();
-        $this->testy = $this->createTinkeroundMock();
-    }
-
     function test_it_counts_empty_array()
     {
         $this->testy->logCount([]);

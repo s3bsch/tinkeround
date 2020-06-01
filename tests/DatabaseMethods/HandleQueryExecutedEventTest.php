@@ -13,8 +13,10 @@ use Tinkeround\Tinkeround;
  */
 class HandleQueryExecutedEventTest extends TestCase
 {
+    protected $preventDumpCollector = true;
+
     /** @var TinkeroundHandleQueryExecutedEvent */
-    private $testy;
+    protected $testy;
 
     function setUp(): void
     {

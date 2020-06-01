@@ -10,11 +10,14 @@ use Tinkeround\Tinkeround;
  */
 class TinkerTimesTest extends TestCase
 {
+    protected $preventDumpCollector = true;
+    
     /** @var TinkeroundTinkerTimes */
-    private $testy;
+    protected $testy;
 
     function setUp(): void
     {
+        parent::setUp();
         $this->testy = $this->createTinkeroundMock(TinkeroundTinkerTimes::class);
     }
 

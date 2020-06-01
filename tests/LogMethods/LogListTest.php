@@ -4,27 +4,14 @@ namespace Tinkeround\Tests\LogMethods;
 
 use Illuminate\Support\Collection;
 use RuntimeException;
-use Tinkeround\Tests\DumpCollector;
 use Tinkeround\Tests\TestCase;
 use Tinkeround\Tests\TestModel;
-use Tinkeround\Tinkeround;
 
 /**
  * Test for the `logList()` method.
  */
 class LogListTest extends TestCase
 {
-    private $dumpCollector;
-
-    /** @var Tinkeround */
-    private $testy;
-
-    function setUp(): void
-    {
-        $this->dumpCollector = new DumpCollector();
-        $this->testy = $this->createTinkeroundMock();
-    }
-
     function test_it_throws_exception_for_invalid_list_argument()
     {
         $this->expectException(RuntimeException::class);
